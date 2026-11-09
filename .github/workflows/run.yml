@@ -1,0 +1,25 @@
+name: Run divisors
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      number:
+        description: "약수를 구할 숫자"
+        required: true
+        default: "100"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Run divisors
+        env:
+          NUMBER: ${{ github.event.inputs.number || '100' }}
+        run: python divisors.py "$NUMBER"
